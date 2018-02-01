@@ -4,10 +4,10 @@ using namespace std;
 
 int main()
 {
-    cout<<"hi amran bla bla bla >>>>"<<endl;
-    int x=5;
+    cout<<"hi amran bla bla bla  your very bad boy"<<endl;
+    int x=50;
 
-    int b = 3;
+    int b = 30;
 
             for(int i=10;i>=0;i--)
      {
