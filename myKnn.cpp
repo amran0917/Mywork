@@ -18,9 +18,9 @@ struct train{
 };
 
 double avg_accuracy=0.0;
-/*void performanceMeasure(int match,int testnum,vector<test>t)
+void performanceMeasure(int match,int testnum,vector<test>t)
 {
-      double precision,recall,f1_score,accuracy=0.0;
+    double precision,recall,f1_score,accuracy=0.0;
       int tp=0,tn=0,fp=0,fn=0;
 
     for(int i=0;i<testnum;i++)
@@ -28,6 +28,7 @@ double avg_accuracy=0.0;
         if(t[i].s==1 &&  t[i].pred_id==1)
         {
             tp++;
+
         }
         else if(t[i].s==1 &&  t[i].pred_id==2)
         {
@@ -43,18 +44,23 @@ double avg_accuracy=0.0;
         }
     }
 
-    precision = tp/(tp+fp);
-    recall= tp/(tp+fn);
-    f1_score=(2*(recall * precision)) / (recall + precision);
-    accuracy= (tp+tn)/(tp+fp+fn+fn);
 
-    cout<<"Precision: "<<precision<<endl;
-    cout<<"Recall: "<<recall<<endl;
-    cout<<"F1 score: "<<f1_score<<endl;
-    cout<<"Accuracy: "<<accuracy<<endl;
+    precision = (double)tp/(tp+fp);
+    recall= (double)tp/(tp+fn);
+    f1_score=(double)(2*(recall * precision)) / (recall + precision);
+   // accuracy= (double)(tp+tn)/(tp+fp+fn+fn);
+    accuracy = ((double)match/testnum);
 
-}*/
-bool comparison( train &x,  train &y)
+
+    cout<<"Precision: "<<precision*100<<" %"<<endl;
+    cout<<"Recall: "<<recall*100<<" %"<<endl;
+    cout<<"F1 score: "<<f1_score*100<<" %"<<endl;
+    cout<<"Accuracy: "<<accuracy*100<<"%"<<endl;
+    cout<<endl<<"phase complete "<<endl<<endl;
+        avg_accuracy+=accuracy;
+
+}
+bool comparison( train x,  train y)
 {
 
     return x.distance < y.distance;
@@ -106,8 +112,8 @@ double distanceCalculate(vector<test>t,vector<train> tr,int countLine,int testnu
       }
 
 
-   // performanceMeasure(match,testnum,t);
-         double precision,recall,f1_score,accuracy=0.0;
+    performanceMeasure(match,testnum,t);
+    /*     float precision,recall,f1_score,accuracy=0.0;
       int tp=0,tn=0,fp=0,fn=0;
 
     for(int i=0;i<testnum;i++)
@@ -115,6 +121,7 @@ double distanceCalculate(vector<test>t,vector<train> tr,int countLine,int testnu
         if(t[i].s==1 &&  t[i].pred_id==1)
         {
             tp++;
+
         }
         else if(t[i].s==1 &&  t[i].pred_id==2)
         {
@@ -130,91 +137,23 @@ double distanceCalculate(vector<test>t,vector<train> tr,int countLine,int testnu
         }
     }
 
-    precision = tp/(tp+fp);
-    recall= tp/(tp+fn);
-    f1_score=(2*(recall * precision)) / (recall + precision);
-   // accuracy= (tp+tn)/(tp+fp+fn+fn);
+
+    precision = (double)tp/(tp+fp);
+    recall= (double)tp/(tp+fn);
+    f1_score=(double)(2*(recall * precision)) / (recall + precision);
+   // accuracy= (double)(tp+tn)/(tp+fp+fn+fn);
     accuracy = ((double)match/testnum);
 
 
-    cout<<"Precision: "<<precision<<endl;
-    cout<<"Recall: "<<recall<<endl;
-    cout<<"F1 score: "<<f1_score<<endl;
+    cout<<"Precision: "<<precision*100<<" %"<<endl;
+    cout<<"Recall: "<<recall*100<<" %"<<endl;
+    cout<<"F1 score: "<<f1_score*100<<" %"<<endl;
     cout<<"Accuracy: "<<accuracy*100<<"%"<<endl;
-    avg_accuracy+=accuracy;
+    cout<<endl<<"phase complete "<<endl<<endl;
+    avg_accuracy+=accuracy; */
 
 
-   /* vector<result>rs(trainNum);
 
-     for(int i=0;i<testnum;i++)
-    {
-
-        for(int j=0;j<trainNum;j++)
-        {
-
-            rs[j].distance= sqrt((t[i].p-tr[j].m)*(t[i].p-tr[j].m)+(t[i].q-tr[j].n)*(t[i].q-tr[j].n)+(t[i].r-tr[j].o)*(t[i].r-tr[j].o));
-            rs[j].id=tr[j].p;
-
-        }
-         sort(rs.begin(),rs.end(),comparison);
-
-        int k=3;
-        int count_1=0,count_2=0;
-
-        for(int u=0;u<k;u++)
-        {
-           // cout<<rs[u].distance<<" "<<rs[u].id<<endl;
-            if(rs[u].id==1) count_1++;
-            else if(rs[u].id==2) count_2++;
-        }
-       // cout<<count_1<<endl;
-        if(count_1>=1) tr[i].pred_id=1;
-        else if(count_2>=1)tr[i].pred_id=2;
-
-         if(tr[i].pred_id==rs[i].id) match++;
-
-         if(count_1>count_2)
-        {
-                if(tr[i].p==1) match++;
-
-        }
-
-        else
-        {
-              if(tr[i].p==2) match++;
-        }
-
-        rs.resize(trainNum);
-    }
-
-        double accuracy=0.0;
-        accuracy =((double)match/testnum);
-        avg_accuracy+=accuracy;
-
-        int tp=0,fp=0;
-        int tn=0,fn=0;
-        double precision,recall,f_score;
-
-      for(int v=0; v<testnum; v++)
-      {
-        if(t[v].s==1 &&  t[v].pred_id==1) tp++;
-        else if(t[v].s==1 && t[v].pred_id==2) fp++;
-        else if(t[v].s==2 && t[v].pred_id==1) fn++;
-        else if(t[v].s==2 && t[v].pred_id==2) tn++;
-
-      }
-
-      precision = (double)(tp/(tp+fp));
-      recall = (double)(tp/(tp+fn));
-      f_score = (double)(2*precision*recall)/(precision+recall);
-
-
-      cout<<"*********************"<<endl;
-      cout<<"Precision: " << precision <<endl;
-      cout<<"REcall : " << recall<<endl;
-      cout<<"F_score: " << f_score<<endl;
-      cout<<"Accuracy:  "<<accuracy<<endl;
-     */
 
 }
 
@@ -239,7 +178,7 @@ void crossValidation(vector<dataStore>data,int countLine)
         {
 
 
-            srand(3);
+         //   srand(3);
             m = rand()%l;
 
 
